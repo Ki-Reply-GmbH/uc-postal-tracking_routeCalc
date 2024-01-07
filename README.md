@@ -24,9 +24,20 @@ uvicorn app.main:app --reload
 
 ## API Endpoints
 
-User Management
-GET /status
+### Service Management
+
+`GET /status`
+
 Get the status of the API.
+
+### Route Management
+
+`POST /packages/{package_id}/calculate-route`
+
+Calculate and update the route for a specific package. Requires the package ID.
+Route Calculation Logic
+
+This section would detail how the route calculation is performed, limitations, and any external services or algorithms used.
 
 ## Error Handling
 

@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException
 from . import auth, models, schemas
+from sqlalchemy.orm import Session
+from .dependencies import get_db
+from .route.calculate import calculate_route
 
 app = FastAPI()
 
@@ -22,3 +25,15 @@ async def login_for_access_token(form_data: schemas.TokenRequestForm = Depends()
 @app.get("/users/me", response_model=schemas.User)
 async def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
     return current_user
+
+@app.post("/packages/{package_id}/calculate-route", response_model=schemas.Route)
+def calculate_package_route(package_id: str, db: Session = Depends(get_db)):
+    db_package = (
+        db.query(models.Package).filter(models.Package.id == package_id).first()
+    )
+    if db_package is None:
+        raise HTTPException(status_code=404, detail="Package not found")
+
+    route_details = calculate_route(db_package.current_location, db_package.destination)
+    # Save route details to the database and return them
+    # ...

@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
 
 class Token(BaseModel):
     access_token: str
@@ -14,4 +16,17 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
-# Additional schemas can be added here
+
+class PackageBase(BaseModel):
+    id: str
+    description: Optional[str] = None
+
+class PackageCreate(PackageBase):
+    pass
+
+class Package(PackageBase):
+    status: str
+    last_updated: datetime
+
+    class Config:
+        orm_mode = True

@@ -39,6 +39,21 @@ Obtain an access token.
 GET /users/me
 Retrieve the current user's details.
 
+### Service Management
+
+`GET /status`
+
+Get the status of the API.
+
+### Route Management
+
+`POST /packages/{package_id}/calculate-route`
+
+Calculate and update the route for a specific package. Requires the package ID.
+Route Calculation Logic
+
+This section would detail how the route calculation is performed, limitations, and any external services or algorithms used.
+
 ## Error Handling
 
 The API uses standard HTTP response codes to indicate the success or failure of an API request. In case of an error, the response will include a JSON object with more information.
